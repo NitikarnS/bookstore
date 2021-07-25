@@ -1,10 +1,12 @@
 package com.project.bookstore.Model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,6 +24,9 @@ public class Book {
     @JsonProperty("is_recommended")
     @Column(name = "is_recommended")
     private boolean isRecommended;
+
+    @ManyToMany(mappedBy = "orders")
+    private List<User> users;
 
     public Book() {
     }

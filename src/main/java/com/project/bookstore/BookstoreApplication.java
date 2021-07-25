@@ -6,13 +6,16 @@ import java.util.stream.Collectors;
 
 import com.project.bookstore.Model.Book;
 import com.project.bookstore.Model.PublisherBook;
+import com.project.bookstore.Model.User;
 import com.project.bookstore.Repository.BookRepository;
+import com.project.bookstore.Repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,6 +25,12 @@ public class BookstoreApplication implements CommandLineRunner {
 
 	@Autowired
 	BookRepository bookRepository;
+
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Value("${publisher.api.books.url}")
 	private String bookUrl;
@@ -48,6 +57,10 @@ public class BookstoreApplication implements CommandLineRunner {
 			System.out.println("insert " + bookRepository.save(
 					new Book(book.getId(), book.getName(), book.getAuthorName(), book.getPrice(), isRecommendation)));
 		}
+
+		System.out.println("insert "
+				+ userRepository.save(new User("john.doe", passwordEncoder.encode("thisismysecret"), "15/01/1985")));
+
 	}
 
 }
