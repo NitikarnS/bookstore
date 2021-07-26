@@ -54,6 +54,15 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+    
+    public String getName() {
+        return username.split("\\.")[0];
+    }
+
+    public String getSurname() {
+        String[] usernameSplit = username.split("\\.");
+        return usernameSplit.length > 0 ? usernameSplit[1] : ""; 
+    }
 
     public String getPassword() {
         return password;

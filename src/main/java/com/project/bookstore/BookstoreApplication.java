@@ -1,5 +1,6 @@
 package com.project.bookstore;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +61,14 @@ public class BookstoreApplication implements CommandLineRunner {
 
 		System.out.println("insert "
 				+ userRepository.save(new User("john.doe", passwordEncoder.encode("thisismysecret"), "15/01/1985")));
+
+		List<Book> orderBooks = new ArrayList<Book>();
+		orderBooks.add(bookRepository.findById(1L).get()) ;
+		orderBooks.add(bookRepository.findById(4L).get()) ;
+
+		User user = userRepository.getById(1L);
+		user.setOrders(orderBooks);
+		userRepository.save(user);
 
 	}
 
