@@ -10,6 +10,7 @@ import com.project.bookstore.Model.User;
 import com.project.bookstore.Service.UserServiceImpl;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,6 +45,13 @@ public class UserController {
     public ResponseEntity<String> createUsers(@RequestBody RegisterForm registerForm) {
         userServiceImpl.createUser(
                 new User(registerForm.getUsername(), registerForm.getPassword(), registerForm.getDateOfBirth()));
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/users")
+    public ResponseEntity<String> deleteUsers() {
+        User currentUser = userServiceImpl.getCurrentUser();
+        userServiceImpl.deleteUser(currentUser);
         return ResponseEntity.ok().build();
     }
 

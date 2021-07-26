@@ -38,6 +38,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         return new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
     }
 
+    @Override
     public User createUser(User user) throws UsernameAlreadyExistException {
         User userData = userRepository.findByUsername(user.getUsername());
         if (userData != null)
@@ -74,6 +75,11 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException(String.format("%s not found", username));
         return user;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
 }

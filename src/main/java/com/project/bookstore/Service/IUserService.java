@@ -8,4 +8,8 @@ public interface IUserService {
 
     public User getCurrentUser();
 
+    public User createUser(User user);
+
+    public void deleteUser(User user);
+
 }
