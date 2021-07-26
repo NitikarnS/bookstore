@@ -3,6 +3,7 @@ package com.project.bookstore.Service;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.project.bookstore.Exception.UsernameAlreadyExistException;
 import com.project.bookstore.Model.User;
 import com.project.bookstore.Repository.UserRepository;
 
@@ -35,6 +36,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("USER"));
         return new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
+    }
+
+    public User createUser(User user) throws UsernameAlreadyExistException {
+        User userData = userRepository.findByUsername(user.getUsername());
+        if (userData != null)
+            throw new UsernameAlreadyExistException("Username already exist");
+        String encodedPasswod = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPasswod);
+        user = userRepository.save(user);
+        return user;
     }
 
     @Override

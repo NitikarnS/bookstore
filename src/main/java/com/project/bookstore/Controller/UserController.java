@@ -4,6 +4,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.project.bookstore.Model.LoginForm;
+import com.project.bookstore.Model.RegisterForm;
 import com.project.bookstore.Model.ResponseUser;
 import com.project.bookstore.Model.User;
 import com.project.bookstore.Service.UserServiceImpl;
@@ -33,9 +34,17 @@ public class UserController {
     @GetMapping("/users")
     public ResponseEntity<ResponseUser> getUsers() {
         User currentUser = userServiceImpl.getCurrentUser();
-        ResponseUser userRs = new ResponseUser(currentUser.getName(), currentUser.getSurname(), currentUser.getDateOfBirth());
+        ResponseUser userRs = new ResponseUser(currentUser.getName(), currentUser.getSurname(),
+                currentUser.getDateOfBirth());
         userRs.setBooks(currentUser.getOrders().stream().map(i -> i.getId()).collect(Collectors.toList()));
         return ResponseEntity.ok().body(userRs);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<String> createUsers(@RequestBody RegisterForm registerForm) {
+        userServiceImpl.createUser(
+                new User(registerForm.getUsername(), registerForm.getPassword(), registerForm.getDateOfBirth()));
+        return ResponseEntity.ok().build();
     }
 
 }
