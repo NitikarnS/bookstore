@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public User login(String username, String password) throws BadCredentialsException {
         User user = userRepository.findByUsername(username);
-        if (!passwordEncoder.matches(password, user.getPassword()))
+        if (user == null || !passwordEncoder.matches(password, user.getPassword()))
             throw new BadCredentialsException("Invalid username/password");
 
         UserDetails principal = loadUserByUsername(username);
