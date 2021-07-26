@@ -80,6 +80,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 
 }
