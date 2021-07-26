@@ -4,9 +4,13 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.project.bookstore.Model.LoginForm;
+import com.project.bookstore.Model.OrderForm;
 import com.project.bookstore.Model.RegisterForm;
+import com.project.bookstore.Model.ResponseOrderSummary;
 import com.project.bookstore.Model.ResponseUser;
 import com.project.bookstore.Model.User;
+import com.project.bookstore.Repository.BookRepository;
+import com.project.bookstore.Service.OrderServiceImpl;
 import com.project.bookstore.Service.UserServiceImpl;
 
 import org.springframework.http.ResponseEntity;
@@ -22,8 +26,11 @@ public class UserController {
 
     private final UserServiceImpl userServiceImpl;
 
-    UserController(UserServiceImpl userServiceImpl) {
+    private final OrderServiceImpl orderServiceImpl;
+
+    UserController(UserServiceImpl userServiceImpl, OrderServiceImpl orderServiceImpl) {
         this.userServiceImpl = userServiceImpl;
+        this.orderServiceImpl = orderServiceImpl;
     }
 
     @PostMapping("/login")
@@ -53,6 +60,14 @@ public class UserController {
         User currentUser = userServiceImpl.getCurrentUser();
         userServiceImpl.deleteUser(currentUser);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/users/orders")
+    public ResponseEntity<ResponseOrderSummary> orders(@RequestBody OrderForm orderForm) {
+        User currentUser = userServiceImpl.getCurrentUser();
+        User user = orderServiceImpl.order(currentUser.getId(), orderForm.getOrders());
+        ResponseOrderSummary orderSummary = new ResponseOrderSummary(user.getTotalPriceOrderBooks());
+        return ResponseEntity.ok().body(orderSummary);
     }
 
 }

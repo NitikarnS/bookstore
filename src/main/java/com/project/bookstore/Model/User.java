@@ -1,5 +1,6 @@
 package com.project.bookstore.Model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -54,14 +55,14 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public String getName() {
         return username.split("\\.")[0];
     }
 
     public String getSurname() {
         String[] usernameSplit = username.split("\\.");
-        return usernameSplit.length > 0 ? usernameSplit[1] : ""; 
+        return usernameSplit.length > 0 ? usernameSplit[1] : "";
     }
 
     public String getPassword() {
@@ -86,6 +87,11 @@ public class User {
 
     public void setOrders(List<Book> orders) {
         this.orders = orders;
+    }
+
+    public BigDecimal getTotalPriceOrderBooks() {
+        if (orders == null) return BigDecimal.ZERO;
+        return orders.stream().map(b -> b.getPrice()).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }
