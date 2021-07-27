@@ -2,6 +2,8 @@ package com.project.bookstore.Controller;
 
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import com.project.bookstore.Model.LoginForm;
 import com.project.bookstore.Model.OrderForm;
 import com.project.bookstore.Model.RegisterForm;
@@ -46,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> createUsers(@RequestBody RegisterForm registerForm) {
+    public ResponseEntity<String> createUsers(@Valid @RequestBody RegisterForm registerForm) {
         userServiceImpl.createUser(
                 new User(registerForm.getUsername(), registerForm.getPassword(), registerForm.getDateOfBirth()));
         return ResponseEntity.ok().build();

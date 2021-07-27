@@ -1,13 +1,18 @@
 package com.project.bookstore.Model;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class RegisterForm {
     
+    @NotBlank()
     private String username;
 
+    @NotBlank()
     private String password;
 
+    @NotBlank()
     @JsonProperty("date_of_birth")
     private String dateOfBirth;
 
