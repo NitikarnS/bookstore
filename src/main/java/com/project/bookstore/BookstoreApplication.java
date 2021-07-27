@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Component;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @Component
 @EnableScheduling
+@EnableSwagger2
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
 
