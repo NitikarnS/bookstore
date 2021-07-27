@@ -1,4 +1,4 @@
-package com.project.bookstore.Service;
+package com.project.bookstore.Service.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -6,6 +6,7 @@ import java.util.Set;
 import com.project.bookstore.Exception.UsernameAlreadyExistException;
 import com.project.bookstore.Model.User;
 import com.project.bookstore.Repository.UserRepository;
+import com.project.bookstore.Service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,13 +15,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements IUserService, UserDetailsService {
+public class UserService implements IUserService {
 
     @Autowired
     private UserRepository userRepository;

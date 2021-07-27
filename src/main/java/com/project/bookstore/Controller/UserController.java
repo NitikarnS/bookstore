@@ -1,6 +1,5 @@
 package com.project.bookstore.Controller;
 
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.project.bookstore.Model.LoginForm;
@@ -9,26 +8,24 @@ import com.project.bookstore.Model.RegisterForm;
 import com.project.bookstore.Model.ResponseOrderSummary;
 import com.project.bookstore.Model.ResponseUser;
 import com.project.bookstore.Model.User;
-import com.project.bookstore.Repository.BookRepository;
-import com.project.bookstore.Service.OrderServiceImpl;
-import com.project.bookstore.Service.UserServiceImpl;
+import com.project.bookstore.Service.impl.OrderService;
+import com.project.bookstore.Service.impl.UserService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userServiceImpl;
 
-    private final OrderServiceImpl orderServiceImpl;
+    private final OrderService orderServiceImpl;
 
-    UserController(UserServiceImpl userServiceImpl, OrderServiceImpl orderServiceImpl) {
+    UserController(UserService userServiceImpl, OrderService orderServiceImpl) {
         this.userServiceImpl = userServiceImpl;
         this.orderServiceImpl = orderServiceImpl;
     }

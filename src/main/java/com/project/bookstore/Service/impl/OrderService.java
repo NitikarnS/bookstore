@@ -1,4 +1,4 @@
-package com.project.bookstore.Service;
+package com.project.bookstore.Service.impl;
 
 import java.util.List;
 
@@ -6,12 +6,13 @@ import com.project.bookstore.Model.Book;
 import com.project.bookstore.Model.User;
 import com.project.bookstore.Repository.BookRepository;
 import com.project.bookstore.Repository.UserRepository;
+import com.project.bookstore.Service.IOrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OrderServiceImpl implements IOrderService {
+public class OrderService implements IOrderService {
 
     @Autowired
     private UserRepository userRepository;
