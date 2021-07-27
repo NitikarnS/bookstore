@@ -23,24 +23,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
-    private final UserService userServiceImpl;
+    private final UserService userService;
 
-    private final OrderService orderServiceImpl;
+    private final OrderService orderService;
 
-    UserController(UserService userServiceImpl, OrderService orderServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
-        this.orderServiceImpl = orderServiceImpl;
+    UserController(UserService userService, OrderService orderService) {
+        this.userService = userService;
+        this.orderService = orderService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginForm loginForm) {
-        userServiceImpl.login(loginForm.getUsername(), loginForm.getPassword());
+        userService.login(loginForm.getUsername(), loginForm.getPassword());
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/users")
     public ResponseEntity<ResponseUser> getUsers() {
-        User currentUser = userServiceImpl.getCurrentUser();
+        User currentUser = userService.getCurrentUser();
         ResponseUser userRs = new ResponseUser(currentUser.getName(), currentUser.getSurname(),
                 currentUser.getDateOfBirth());
         userRs.setBooks(currentUser.getOrders().stream().map(i -> i.getId()).collect(Collectors.toList()));
@@ -49,22 +49,22 @@ public class UserController {
 
     @PostMapping("/users")
     public ResponseEntity<String> createUsers(@Valid @RequestBody RegisterForm registerForm) {
-        userServiceImpl.createUser(
+        userService.createUser(
                 new User(registerForm.getUsername(), registerForm.getPassword(), registerForm.getDateOfBirth()));
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/users")
     public ResponseEntity<String> deleteUsers() {
-        User currentUser = userServiceImpl.getCurrentUser();
-        userServiceImpl.deleteUser(currentUser);
+        User currentUser = userService.getCurrentUser();
+        userService.deleteUser(currentUser);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/users/orders")
     public ResponseEntity<ResponseOrderSummary> orders(@RequestBody OrderForm orderForm) {
-        User currentUser = userServiceImpl.getCurrentUser();
-        User user = orderServiceImpl.order(currentUser.getId(), orderForm.getOrders());
+        User currentUser = userService.getCurrentUser();
+        User user = orderService.order(currentUser.getId(), orderForm.getOrders());
         ResponseOrderSummary orderSummary = new ResponseOrderSummary(user.getTotalPriceOrderBooks());
         return ResponseEntity.ok().body(orderSummary);
     }
