@@ -13,6 +13,7 @@ import com.project.bookstore.Model.User;
 import com.project.bookstore.Service.impl.OrderService;
 import com.project.bookstore.Service.impl.UserService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +52,7 @@ public class UserController {
     public ResponseEntity<String> createUsers(@Valid @RequestBody RegisterForm registerForm) {
         userService.createUser(
                 new User(registerForm.getUsername(), registerForm.getPassword(), registerForm.getDateOfBirth()));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/users")
