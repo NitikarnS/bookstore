@@ -62,7 +62,7 @@ public class User {
 
     public String getSurname() {
         String[] usernameSplit = username.split("\\.");
-        return usernameSplit.length > 0 ? usernameSplit[1] : "";
+        return usernameSplit.length > 1 ? usernameSplit[1] : "";
     }
 
     public String getPassword() {
