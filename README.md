@@ -127,8 +127,9 @@ start spring boot server
       }"
     
     After successful login you will receive cookie session
-    You will need to set the cookie session you received in the request header. to be used to verify your identity
-#####Example
+    You will need to set the cookie session you received in the request header to be used to verify your identity
+
+	Example:
 
       HTTP/1.1 200
       X-Content-Type-Options: nosniff
